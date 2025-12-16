@@ -4,7 +4,11 @@ require_once 'config/db.php';
 echo "Starting Database Installation...\n";
 
 try {
-    $db = Database::getInstance()->getConnection();
+    $db = Database::getInstance();
+    if ($db === null) {
+        throw new RuntimeException("Failed to obtain database instance.");
+    }
+    $connection = $db->getConnection();
 
     // Read Schema
     $sql = file_get_contents(__DIR__ . '/sql/schema.sql');

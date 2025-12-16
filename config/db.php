@@ -1,13 +1,11 @@
 <?php
 // config/db.php
 
-class Database
-{
+class Database {
     private static $instance = null;
     private $conn;
 
-    private function __construct()
-    {
+    private function __construct() {
         $config = function_exists('app_config') ? app_config() : [
             'DB_HOST' => 'localhost',
             'DB_NAME' => 'onlinemarket_ng',
@@ -43,16 +41,14 @@ class Database
         }
     }
 
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new Database();
         }
         return self::$instance;
     }
 
-    public function getConnection()
-    {
+    public function getConnection() {
         return $this->conn;
     }
 }
