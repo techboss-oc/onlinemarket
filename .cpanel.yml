@@ -2,9 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/hqwhttyp/public_html/
-
-    # Sync all project files
-    - /usr/bin/rsync -av --delete ./ $DEPLOYPATH
-
-    # Sync config directory but DO NOT overwrite existing files
-    - /usr/bin/rsync -av --ignore-existing ./config/ $DEPLOYPATH/config/
+    - /usr/bin/rsync -av --exclude 'config' --exclude '.git' --exclude '.cpanel.yml' . $DEPLOYPATH
