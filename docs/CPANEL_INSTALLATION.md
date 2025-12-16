@@ -13,49 +13,48 @@ Follow these steps to deploy Onlinemarket.ng to a cPanel server and connect the 
 - Create a database, a user, and a strong password.
 - Grant the user **ALL PRIVILEGES** to the database.
 
-## 3. Configure Environment (`config/env.php`)
+## 3. Configure Database Connection
 
-- Edit `config/env.php` directly on the server (the deployment excludes `config`).
-- Set the following values:
-  ```php
-  return [
-      'APP_ENV' => 'production',
-      'DB_HOST' => 'localhost',
-      'DB_NAME' => 'cpanel_db_name',
-      'DB_USER' => 'cpanel_db_user',
-      'DB_PASS' => 'cpanel_db_password',
-      'DB_PORT' => 3306,
-      'DISPLAY_ERRORS' => false,
-  ];
-  ```
+This project uses `config/env.php` for configuration.
 
-## 4. Verify PHP Requirements
+1. In cPanel File Manager, edit `config/env.php`.
+   - **Note:** If this file was not deployed (because `config` folder is ignored), you must create it manually or copy `config/db.sample.php` to `config/env.php` on the server.
+2. Update the array with your database credentials:
+   ```php
+   return [
+       'APP_ENV' => 'production',
+       'DB_HOST' => 'localhost',
+       'DB_NAME' => 'your_cpanel_db_name', // e.g., hqwhttyp_market
+       'DB_USER' => 'your_cpanel_db_user', // e.g., hqwhttyp_user
+       'DB_PASS' => 'your_password',
+       'DISPLAY_ERRORS' => false, // Set to true temporarily to debug 500 errors
+   ];
+   ```
+
+**(Optional) Hardcoding in Class**: If you prefer, you can edit `classes/Database.php` directly on the server and uncomment the manual configuration block in the constructor.
+
+## 4. Import Database (Manual)
+
+1. Go to **phpMyAdmin** in cPanel.
+2. Select your database.
+3. Click **Import**.
+4. Upload `sql/schema.sql` from your local project folder.
+5. Click **Go** to run the SQL.
+
+## 5. Verify PHP Requirements
 
 - PHP version: **8.0+** (8.1/8.2 recommended).
 - Extensions: `pdo_mysql`, `mbstring`, `gd`.
 
-## 5. Initialize the Schema
-
-- Visit `https://your-domain/cpanel_install.php` to execute `sql/schema.sql` on the server.
-- You should see `OK: N statements executed` upon success.
-
-## 6. Deployment Automation (optional)
-
-- `.cpanel.yml` is present and uses `rsync` to deploy while excluding `config/`.
-- Ensure `DEPLOYPATH` is set correctly for your account.
-
 ## Troubleshooting 500 Errors
 
-- Temporarily set `'DISPLAY_ERRORS' => true` in `config/env.php`, refresh, note the error, then revert to `false`.
-- Check logs at `storage/logs/app.log` for database or runtime errors.
-- Confirm the database name and user match exactly (cPanel prefixes are common).
-- Ensure `pdo_mysql` is enabled in cPanel → Select PHP Version.
-- Make sure `cpanel_install.php` ran successfully and tables exist.
-- If the homepage redirects but fails, verify `home_page_-_onlinemarket.ng/index.php` includes `../core/init.php` correctly and that the `classes` directory is accessible.
+- **Database Connection**: If you see "Database Connection Failed", check your username/password in `env.php` or `db.php`.
+- **Debug Mode**: Temporarily set `'DISPLAY_ERRORS' => true` in `config/env.php` (or edit `core/init.php` manually) to see the actual error message on screen.
+- **Logs**: Check `storage/logs/app.log` in File Manager.
+- **Prefixes**: Ensure you included the cPanel user prefix (e.g., `hqwhttyp_`) in your database name and user.
 
 ## Quick Checklist
 
-- `config/env.php` updated on server
-- `pdo_mysql` enabled
-- Schema installed via `cpanel_install.php`
-- Correct `DEPLOYPATH` in `.cpanel.yml`
+- Database imported via phpMyAdmin
+- Credentials updated in `config/env.php` (or `.env` / `db.php`)
+- `pdo_mysql` enabled in PHP Selector
