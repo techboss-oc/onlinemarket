@@ -1,51 +1,61 @@
 # cPanel Installation Guide
 
-Follow these steps to deploy Onlinemarket.ng to a cPanel server.
+Follow these steps to deploy Onlinemarket.ng to a cPanel server and connect the database.
 
-## 1. File Upload
+## 1. Upload Files
 
-1. Compress the entire project folder (excluding `.git` if present) into a `.zip` file.
-2. Log in to cPanel -> **File Manager**.
-3. Navigate to `public_html` (or your subdomain folder).
-4. Upload and Extract the `.zip` file.
+- Compress the project (exclude `.git`) and upload it via cPanel → File Manager to `public_html` or your subdomain.
+- Extract the archive.
 
-## 2. Database Setup
+## 2. Create the Database
 
-1. Go to **MySQL Database Wizard** in cPanel.
-2. Create a new database (e.g., `youruser_market`).
-3. Create a new user and password.
-4. Assign the user to the database with **ALL PRIVILEGES**.
+- Open cPanel → MySQL Database Wizard.
+- Create a database, a user, and a strong password.
+- Grant the user **ALL PRIVILEGES** to the database.
 
-## 3. Import Database
+## 3. Configure Environment (`config/env.php`)
 
-1. Go to **phpMyAdmin** in cPanel.
-2. Select your new database.
-3. Click **Import**.
-4. Upload `sql/schema.sql` from the project folder.
-5. (Optional) To seed test data, run the SQL queries found in `seed_ads.php` manually or upload a dump of your local DB.
+- Edit `config/env.php` directly on the server (the deployment excludes `config`).
+- Set the following values:
+  ```php
+  return [
+      'APP_ENV' => 'production',
+      'DB_HOST' => 'localhost',
+      'DB_NAME' => 'cpanel_db_name',
+      'DB_USER' => 'cpanel_db_user',
+      'DB_PASS' => 'cpanel_db_password',
+      'DB_PORT' => 3306,
+      'DISPLAY_ERRORS' => false,
+  ];
+  ```
 
-## 4. Configuration
+## 4. Verify PHP Requirements
 
-1. Edit `config/db.php` in File Manager.
-2. Update the credentials:
-   ```php
-   private $host = 'localhost';
-   private $db_name = 'youruser_market';
-   private $username = 'youruser_dbuser';
-   private $password = 'your_strong_password';
-   ```
-3. Edit `core/init.php` if necessary to update `SITE_URL` (optional, but good practice).
+- PHP version: **8.0+** (8.1/8.2 recommended).
+- Extensions: `pdo_mysql`, `mbstring`, `gd`.
 
-## 5. Permissions
+## 5. Initialize the Schema
 
-- Ensure folders are `755` and files are `644`.
-- If you have an `uploads` folder later, ensure it is writable.
+- Visit `https://your-domain/cpanel_install.php` to execute `sql/schema.sql` on the server.
+- You should see `OK: N statements executed` upon success.
 
-## 6. PHP Version
+## 6. Deployment Automation (optional)
 
-- Ensure your server is running **PHP 8.0+** (Recommended 8.1 or 8.2).
-- Extensions required: `pdo_mysql`, `gd`, `mbstring`.
+- `.cpanel.yml` is present and uses `rsync` to deploy while excluding `config/`.
+- Ensure `DEPLOYPATH` is set correctly for your account.
 
-## 7. Security
+## Troubleshooting 500 Errors
 
-- Delete `install_db.php`, `seed_ads.php`, and `fix_db.php` after installation.
+- Temporarily set `'DISPLAY_ERRORS' => true` in `config/env.php`, refresh, note the error, then revert to `false`.
+- Check logs at `storage/logs/app.log` for database or runtime errors.
+- Confirm the database name and user match exactly (cPanel prefixes are common).
+- Ensure `pdo_mysql` is enabled in cPanel → Select PHP Version.
+- Make sure `cpanel_install.php` ran successfully and tables exist.
+- If the homepage redirects but fails, verify `home_page_-_onlinemarket.ng/index.php` includes `../core/init.php` correctly and that the `classes` directory is accessible.
+
+## Quick Checklist
+
+- `config/env.php` updated on server
+- `pdo_mysql` enabled
+- Schema installed via `cpanel_install.php`
+- Correct `DEPLOYPATH` in `.cpanel.yml`
