@@ -38,8 +38,9 @@ This project uses `config/env.php` for configuration.
 1. Go to **phpMyAdmin** in cPanel.
 2. Select your database.
 3. Click **Import**.
-4. Upload `sql/schema.sql` from your local project folder.
-5. Click **Go** to run the SQL.
+4. Upload `sql/schema.sql` from your local project folder to create the table structure.
+5. (Optional) To add test data (Seller, Buyer, Ads), verify the data locally and export/import it, or run SQL inserts manually.
+6. Click **Go** to run the SQL.
 
 ## 5. Verify PHP Requirements
 

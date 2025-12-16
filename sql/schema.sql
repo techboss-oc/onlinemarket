@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS ads (
 CREATE TABLE IF NOT EXISTS ad_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ad_id INT NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
+    image_url TEXT NOT NULL,
     is_primary BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (ad_id) REFERENCES ads(id) ON DELETE CASCADE
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS messages (
     chat_id INT NOT NULL,
     sender_id INT NOT NULL,
     message TEXT,
-    image_url VARCHAR(255),
+    image_url TEXT,
     is_read BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (chat_id) REFERENCES chats(id) ON DELETE CASCADE,

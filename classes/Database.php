@@ -18,10 +18,11 @@ class Database
 
         if (!isset($host)) {
             $config = app_config();
-            $host = $config['DB_HOST'] ?? 'localhost';
-            $db = $config['DB_NAME'] ?? '';
-            $user = $config['DB_USER'] ?? '';
-            $pass = $config['DB_PASS'] ?? '';
+            // Support both Standard (DB_*) and Legacy (lowercase) keys
+            $host = $config['DB_HOST'] ?? $config['host'] ?? 'localhost';
+            $db = $config['DB_NAME'] ?? $config['database'] ?? '';
+            $user = $config['DB_USER'] ?? $config['user'] ?? '';
+            $pass = $config['DB_PASS'] ?? $config['password'] ?? '';
             $port = $config['DB_PORT'] ?? 3306;
         }
 

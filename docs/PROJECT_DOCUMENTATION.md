@@ -37,12 +37,31 @@ The database `onlinemarket_ng` is normalized and includes:
 
 ## Deployment Checklist
 
-- [ ] Upload files to server.
-- [ ] Create MySQL database.
-- [ ] Import `sql/schema.sql`.
-- [ ] Update `config/db.php`.
-- [ ] Verify PHP 8.1+ is running.
+- [ ] Upload files to server (exclude `config` folder if using git/rsync).
+- [ ] Create MySQL database in cPanel.
+- [ ] Import `sql/schema.sql` via phpMyAdmin.
+- [ ] Create `config/env.php` on server with DB credentials.
+- [ ] Verify PHP 8.1+ is running with `pdo_mysql`, `mbstring`, `gd`.
 - [ ] Test Login/Register.
+
+## Configuration
+
+The project uses a manual environment configuration file:
+
+- **Local:** `config/env.php` (created from `db.sample.php`).
+- **Production:** `config/env.php` (must be created manually or via cPanel File Manager).
+- **Fallback:** `classes/Database.php` has a manual configuration block that can be uncommented if file-based config fails.
+
+## Database Schema
+
+The database `onlinemarket_ng` is normalized and includes:
+
+- `users`: Stores buyer, seller, admin info.
+- `categories`: Hierarchical categories with icons.
+- `locations`: States and cities.
+- `ads`: Product listings linked to users, categories, and locations.
+- `ad_images`: Multiple images per ad (`TEXT` type for long URLs).
+- `chats` & `messages`: Real-time messaging system.
 
 ## Future Scalability
 
