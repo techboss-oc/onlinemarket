@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chat Moderation - Onlinemarket.ng</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#195de6",
+                        "primary-dark": "#154bb8",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a202c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white h-screen flex flex-col overflow-hidden font-display">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] dark:border-slate-800 bg-surface-light dark:bg-surface-dark px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-xl">shield</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Onlinemarket.ng</h2>
+</div>
+<!-- Global Search -->
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#f0f2f5] dark:bg-slate-800">
+<div class="text-slate-500 flex border-none items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-slate-500 px-3 text-sm font-normal leading-normal" placeholder="Search admin..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal transition-colors" href="#">Moderation</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Users</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100 dark:ring-slate-700 cursor-pointer" data-alt="Admin profile picture showing a person smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzMIudpa_1R6wAqdhtf2a_Ps9wKzvXqrqHL6gdW0wo95Lztkc17tR1I7N3y28-_jLpOf-GyblbSIpT93awQRBC5fJgeQaSJSt9vZxL4xG_6KB3kUbN7wjQBWa24oEQh2h7BxDA2k7fx9QZsT3r00TehUa0nq4ljdA3uW3KhFHbxffTSlOuwO0Gz3HRLpHn0L6JEgtV8QbOtVZy5_-zKURIl1RP8Edsea5nrzHyDbtdwiGSWwA3L1NRxCNmDpa-go2Czowk1MXu4DY");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation (Optional for context, keeping minimal here as per request for single page view) -->
+<!-- Main Dashboard Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Data Section (Scrollable part) -->
+<div class="shrink-0 px-6 py-4 border-b border-[#e7ebf3] dark:border-slate-800 bg-surface-light dark:bg-surface-dark z-10">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-4">
+<a class="text-slate-500 text-sm font-medium hover:text-primary" href="#">Dashboard</a>
+<span class="text-slate-400 text-sm">/</span>
+<a class="text-slate-500 text-sm font-medium hover:text-primary" href="#">Moderation</a>
+<span class="text-slate-400 text-sm">/</span>
+<span class="text-slate-900 dark:text-white text-sm font-semibold">Chat Reports</span>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+<div class="flex flex-col gap-1 rounded-xl p-4 border border-[#e7ebf3] dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Reports</p>
+<span class="material-symbols-outlined text-orange-500 text-xl">pending_actions</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">142</p>
+<span class="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">+12%</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-4 border border-[#e7ebf3] dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Users Blocked Today</p>
+<span class="material-symbols-outlined text-red-500 text-xl">block</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">28</p>
+<span class="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">+5%</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-4 border border-[#e7ebf3] dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg Response Time</p>
+<span class="material-symbols-outlined text-primary text-xl">timer</span>
+</div>
+<div class="flex items-baseline gap-2 mt-1">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">4m 12s</p>
+<span class="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">-8%</span>
+</div>
+</div>
+</div>
+<!-- Filters & Search Toolbar -->
+<div class="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+<!-- Chips -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 text-sm font-medium transition-colors">
+                            All Reports
+                        </button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7ebf3] dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            Scam Attempt
+                            <span class="bg-slate-200 dark:bg-slate-600 text-[10px] px-1.5 rounded-full h-4 flex items-center">42</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7ebf3] dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            Harassment
+                            <span class="bg-slate-200 dark:bg-slate-600 text-[10px] px-1.5 rounded-full h-4 flex items-center">18</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e7ebf3] dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            Spam
+                        </button>
+</div>
+<!-- Search -->
+<div class="w-full md:w-auto min-w-[300px]">
+<div class="flex w-full items-center rounded-lg bg-white dark:bg-slate-800 border border-[#e7ebf3] dark:border-slate-700 h-9 px-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-sm text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="Search by Ticket ID or Keywords"/>
+</div>
+</div>
+</div>
+</div>
+<!-- 3-Pane Interface (Master-Detail) -->
+<div class="flex flex-1 overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Left Pane: Report Queue -->
+<div class="w-full md:w-[320px] lg:w-[380px] flex flex-col border-r border-[#e7ebf3] dark:border-slate-800 bg-white dark:bg-surface-dark overflow-y-auto shrink-0 z-0">
+<div class="p-3">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-2">Queue (142)</h3>
+<!-- List Item 1 (Active) -->
+<div class="group flex flex-col gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 cursor-pointer mb-2 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300 text-[10px] font-bold px-2 py-0.5 rounded-full">SCAM</span>
+<span class="text-slate-500 text-xs">#TK-9281</span>
+</div>
+<span class="text-slate-400 text-xs">2m ago</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Avatar of reported user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCbjHHgnKNImVZhrmf-vLLu5iQVSCbIih_D9atVaDeHfTo5nJkpsWyGWIgNtajhd71x0V1Y-4Y2ThneWxFGvvTKvgT-6_HxChsQbYvIhB9hHdpe3xuX8M4so3bwSAaiLQlBtuj1ucHcA827eReA-QEsiZ6uPY_aqm1crN_p2h1QNnsZ4D6OhySmq_hQi_CpcaWjbJcVA3R5mxEwmI7vF6BaNAx_cyPMsqeJar582wSKVGleehBP6x7DvIkicmZgRT97v6Ga1tNgt8U')"></div>
+<div class="absolute -bottom-1 -right-1 bg-red-500 rounded-full p-0.5 border-2 border-white dark:border-surface-dark">
+<span class="material-symbols-outlined text-white text-[10px] block">warning</span>
+</div>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium text-sm leading-tight">Reported: James O.</p>
+<p class="text-slate-500 text-xs truncate max-w-[180px]">By: Sarah K. • "Asking for upfront payment"</p>
+</div>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="group flex flex-col gap-2 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-[#e7ebf3] dark:hover:border-slate-700 cursor-pointer mb-2 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300 text-[10px] font-bold px-2 py-0.5 rounded-full">HARASSMENT</span>
+<span class="text-slate-500 text-xs">#TK-9280</span>
+</div>
+<span class="text-slate-400 text-xs">15m ago</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center bg-slate-200" data-alt="Avatar of user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0v4p_FQCB-SeNo1Kf1zzvFlS_6Ks928Pmd0QQ5OMhcpH7et9srIm2LiUgCaee29TcpFEkdnxlpLGH5s66-72zgZAvlOmFXivl5tVyPFl__YoxFVeS9Pv2TcMbDNN5Phv5uDP2LQqKNM6qmV-ywuNA7_fy4IT8pUMhhRR3OohKtPT7E9ChNVaFs_qD9PKa3SvEGw3aiTI6CXUb0l6l-VG6vN6mljHACsUtxA6uM9EmQCmnDMh19ZYZ7S5_rBH7tntxCIKdhigDyMQ')"></div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium text-sm leading-tight">Reported: David L.</p>
+<p class="text-slate-500 text-xs truncate max-w-[180px]">By: Amina Y. • "Inappropriate language"</p>
+</div>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="group flex flex-col gap-2 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-[#e7ebf3] dark:hover:border-slate-700 cursor-pointer mb-2 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">SPAM</span>
+<span class="text-slate-500 text-xs">#TK-9275</span>
+</div>
+<span class="text-slate-400 text-xs">42m ago</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center bg-slate-200" data-alt="Avatar of user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuATOBIug0SmAhNh0FiaiE9TcLIrZjdLv8WSw2lbCOOSi19CBntFg8QwgqU-w449QynAmVxXWuR8Tb9lZinEIek1P2LspdQAsNIeK2oRlLW1hgqihvmCVHHoyMN7BZdQRbcBV_MpCLvYf4rBPWT6HswKFlDCQaTtqH5xiHv7hd7r3olQFTz7mGR4YwKJkdaordCfUhyEVGUTT73zz0js3mmEGN8XXXaw5l6f3UyEKO21p8r3PW266Ayitls_Z9HCYBC_GlsOJzkpbd0')"></div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium text-sm leading-tight">Reported: CryptoBot_99</p>
+<p class="text-slate-500 text-xs truncate max-w-[180px]">By: System • "Mass messaging detected"</p>
+</div>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="group flex flex-col gap-2 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-[#e7ebf3] dark:hover:border-slate-700 cursor-pointer mb-2 transition-all opacity-60">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">RESOLVED</span>
+<span class="text-slate-500 text-xs">#TK-9270</span>
+</div>
+<span class="text-slate-400 text-xs">2h ago</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center bg-slate-200" data-alt="Avatar of user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJocGY0hqBwsVaZb7lk7gZjpxEiLzb1Gx0bINB1qtNVCfWFjYZRo3NrSYzl9nfaNP9YMnsf1r5IPsicJz_exh75ITUzqLnDRkadPdnYyz6w3JCHIYzC90q1lGx3VrrMd98yE3TPH8azIOpwYkzgmQNDm85rYDVBiNLK-yX2uvH0zopwF_aPJE_oDl2QQDc2QmeNfU7a08h3qGaByxGzrLuPH92MMyvB4a_p6tQU5TmRSR9n7XOKSSgAjCxWwWVQ1VPbhS4GP9Lbus')"></div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium text-sm leading-tight">Reported: Tina R.</p>
+<p class="text-slate-500 text-xs truncate max-w-[180px]">By: John D. • "Product not as described"</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Pane: Chat Log Viewer -->
+<div class="flex-1 flex flex-col min-w-0 bg-[#f8f9fc] dark:bg-[#0f131a] relative">
+<!-- Chat Header -->
+<div class="h-16 px-6 border-b border-[#e7ebf3] dark:border-slate-800 bg-white dark:bg-surface-dark flex items-center justify-between shrink-0">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full ring-2 ring-white dark:ring-surface-dark bg-cover bg-center" data-alt="User avatar 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrrVAJNTt-ChJU-kMr7RpGMrLRuLQouw0XsK57Sv5q8AycGsXXbVtq4c3U3jDXzN3414fokvcuMP8Gn8FuVtWktYr1aeqrso34-HK4Km7iaTEczgaKSr2g4O4np_b0oLszAEg8k9kmyufsfaBXXtOl7tohZovq6Ql1nvd75miDbdbCt-ChSlsnqs1pK2m9yOwv2oOZVzxBJOmrQ6o4j108LsUCkbl7dI5ast14UfvZeCpNppDDRD0pC5do5SFEPvcjTM2LGVa8tjw')"></div>
+<div class="size-8 rounded-full ring-2 ring-white dark:ring-surface-dark bg-cover bg-center" data-alt="User avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNriKQEuQidjHz5Qs8hqG0K24MgmuykDe3y3BqSH-tcY-mb9v1LjITEGxVGNGgvrxyM2SMGTvsrFR7mmj9SAr_nvSPzhEw68YDZeQtASNzB0d0SeV3EHpaazkR2dOINi8DhMnHSLI_JRqAqsuRL2nfVLLAYm2ZkKADooVr2zDnU2Bqii2og95vcE60aT5fIOrIAq72U5EbWJhjl9XW05qYMN6xhJziFvJt8w0tC7lNaaMZiIZtD6oWLQQqmafEWuxyk6pElhmjkc0')"></div>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Conversation: iPhone 13 Pro Max</h3>
+<p class="text-xs text-slate-500">Started Today, 10:23 AM • Item ID: #88219</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<!-- Chat Messages Area -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+<!-- Date Divider -->
+<div class="flex justify-center my-2">
+<span class="text-[10px] font-medium text-slate-400 bg-[#e7ebf3] dark:bg-slate-800 px-3 py-1 rounded-full">Today</span>
+</div>
+<!-- Message Left (Reporter) -->
+<div class="flex gap-3 max-w-[80%]">
+<div class="size-8 rounded-full bg-cover bg-center shrink-0 mt-1" data-alt="Reporter avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCB3JK2I1t-vcWiL8EWBa681Eqf-Zu56N_DV1Qk7xGCzpSO2BhkyJ-d0QtzLpJFBXJq9Djn7-GYCArLrHiaSfkk4S9jbdU4VgDJPH37lmylz9FmrOZ8-jdxo69maHN_pweqk0sVvo6sXD-FmRV5UIzwBy8gX1Cff_6ofl9_LWJxmwijJ2qqB-dqLSnINNpROh1GLXdssNR9EMTKri_X_3-s53BTaeY3wmgTUkXNMvBH-fYoHH1mMrB4dAA4ngUvZKVR0w_Xvz3FkH8')"></div>
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline gap-2">
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">Sarah K.</span>
+<span class="text-[10px] text-slate-400">10:23 AM</span>
+</div>
+<div class="bg-white dark:bg-slate-700 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-sm text-sm text-slate-800 dark:text-slate-200">
+                                    Hi, is this iPhone still available?
+                                </div>
+</div>
+</div>
+<!-- Message Right (Reported User) -->
+<div class="flex gap-3 max-w-[80%] self-end flex-row-reverse">
+<div class="size-8 rounded-full bg-cover bg-center shrink-0 mt-1" data-alt="Reported user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCanZLVZg8k1V6dnbJO_odvwyjufDx1zAcxo0NAOsa9uZCCV7KU6VP6ElvbT7_M62HD_0jOM0PeYyTrO_zdhm5Ap3BOr1Imcs-lWgSP_-GbdJM2taANhnSHXIfOQXGPRiWg0QnUkDS2D0YnIqgarK1spl6Xr3c-aYiF_KltVG3vNIK3U6IDoyb6AxmpTbBu0SMCRTT7gWSUHQyEHJC-CvKLW3OglAK7cqQ3MSGxaJL0pNifZL_Zjfy-QNwAH89a5BdbsmwUq33qNY')"></div>
+<div class="flex flex-col gap-1 items-end">
+<div class="flex items-baseline gap-2 flex-row-reverse">
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">James O.</span>
+<span class="text-[10px] text-slate-400">10:25 AM</span>
+</div>
+<div class="bg-blue-600 p-3 rounded-tl-xl rounded-bl-xl rounded-br-xl shadow-sm text-sm text-white">
+                                    Yes it is available. Very good condition.
+                                </div>
+</div>
+</div>
+<!-- Message Left -->
+<div class="flex gap-3 max-w-[80%]">
+<div class="size-8 rounded-full bg-cover bg-center shrink-0 mt-1" data-alt="Reporter avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPmfXaD9l86XAeJu_itV9oVWGPcoo_JCRWv2eV1EG9D3WTVSmMx9Q2o825a-n4X1bd93FB_fbVa5Sbn0PlGNQgiNJRDyYIScJOPvTbxzUU27dUdHrrnul1i3pMVFQlRIPz4uZbdn2-dM9IzRwkrRyrXs-ZmwsYAm8t6oJZwM5i4wfHb0R08Tadr43YW6RLoSvBjMxlbVzXkWVndnHzDqVwwk9YcV-wx7w0DHnLR930r4VCd6CGtTkunsYRHolqaPFcq-OCvNyISiU')"></div>
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline gap-2">
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">Sarah K.</span>
+<span class="text-[10px] text-slate-400">10:26 AM</span>
+</div>
+<div class="bg-white dark:bg-slate-700 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-sm text-sm text-slate-800 dark:text-slate-200">
+                                    Great! Can we meet at the Ikeja City Mall for me to check it?
+                                </div>
+</div>
+</div>
+<!-- Message Right (Flagged) -->
+<div class="flex gap-3 max-w-[80%] self-end flex-row-reverse">
+<div class="size-8 rounded-full bg-cover bg-center shrink-0 mt-1" data-alt="Reported user avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCE0ZM_k8fZMAqIl_dxeYdpXdSTrDyqzP05SerUAWiv_r8-4E1vTOoVv0fLtuzL0sLJ2uRZjqbZ-A8sYSs-H38d_-JoDL0ql3d_Q3pF4zYYlteiyIrSPzybqz5eIhfIT3We6SAFLESuBIPtx1w999zwGMNKc9GcbX8Vocec4lbNZrAOe_xBztnD1mkv5XwMr4qRQ6fWUjN_JOx4QtdwFjei84itJweKCHJ27amg_x-ncFjTuiUD1M5nYxVgf9LknW-L4cE-rN_PAf0')"></div>
+<div class="flex flex-col gap-1 items-end w-full">
+<div class="flex items-baseline gap-2 flex-row-reverse">
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">James O.</span>
+<span class="text-[10px] text-slate-400">10:28 AM</span>
+</div>
+<div class="group relative bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3 rounded-tl-xl rounded-bl-xl rounded-br-xl shadow-sm text-sm text-slate-800 dark:text-slate-100 w-full">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-red-500 text-lg shrink-0 mt-0.5">warning</span>
+<span>No, I am busy. Send me the money first to secure it. If you don't pay now to my account 20392..., I sell to someone else. Don't be stupid.</span>
+</div>
+<div class="absolute -left-28 top-2 hidden group-hover:flex items-center">
+<span class="text-[10px] bg-slate-800 text-white px-2 py-1 rounded shadow-lg">Flagged by System: Scam Keywords</span>
+</div>
+</div>
+</div>
+</div>
+<!-- System Notice -->
+<div class="flex justify-center my-4">
+<div class="bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-sm">info</span>
+<span class="text-xs text-slate-500 font-medium">Sarah K. reported this conversation for "Scam Attempt" at 10:30 AM</span>
+</div>
+</div>
+</div>
+<!-- Chat Input (Disabled state visualization) -->
+<div class="p-4 bg-white dark:bg-surface-dark border-t border-[#e7ebf3] dark:border-slate-800">
+<div class="relative flex items-center bg-slate-50 dark:bg-slate-800 rounded-lg border border-dashed border-slate-300 dark:border-slate-600 p-3 text-slate-400 select-none cursor-not-allowed">
+<span class="material-symbols-outlined mr-2">lock</span>
+<span class="text-sm">Chat is frozen pending moderation action.</span>
+</div>
+</div>
+</div>
+<!-- Right Pane: Context & Actions -->
+<div class="w-[300px] xl:w-[360px] bg-white dark:bg-surface-dark border-l border-[#e7ebf3] dark:border-slate-800 shrink-0 flex flex-col h-full overflow-y-auto hidden lg:flex">
+<!-- Reported User Profile -->
+<div class="p-6 border-b border-[#e7ebf3] dark:border-slate-800 flex flex-col items-center">
+<div class="size-20 rounded-full bg-cover bg-center mb-3 relative" data-alt="Large profile picture of reported user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCx1BUqyh-bcQ-g_0hgFrt35QsoNfOkif8GFKgTkVT2X67xzcO81Ap9KE2LJYIzP36hw1lUMaI_Yh8CdAdBF-XGNuaohrYRQgNlA3XgLg2NpjLJR2KU-RpsVFDrezuTiBGGyA4gEcxPNcunZiheKV9hQ5gdMUdWA6gOxyG2iMW9GnVHI8W33MJ6tpL0g3Ipa0xaZeXb4p8qIiDU6vT1h1xnoLLiUa1ukwMWG7HTC0LZhs6lnJkOxyrk1S3awwwvv5ipdZGt_osQ2QQ')">
+<div class="absolute bottom-0 right-0 bg-green-500 size-4 border-2 border-white rounded-full"></div>
+</div>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">James O.</h2>
+<p class="text-sm text-slate-500 mb-4">ID: 8829103 • Member since 2021</p>
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xs text-slate-500 uppercase font-bold">Trust Score</p>
+<p class="text-xl font-bold text-red-500">24%</p>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg text-center">
+<p class="text-xs text-slate-500 uppercase font-bold">Reports</p>
+<p class="text-xl font-bold text-slate-900 dark:text-white">12</p>
+</div>
+</div>
+</div>
+<!-- Details Accordion -->
+<div class="p-6 flex-1">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Report Details</h3>
+<div class="flex flex-col gap-4 mb-6">
+<div>
+<p class="text-xs text-slate-500 mb-1">Reason</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500 text-sm">money_off</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Scam / Payment Fraud</span>
+</div>
+</div>
+<div>
+<p class="text-xs text-slate-500 mb-1">Reporter Comment</p>
+<p class="text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                    "He refused to meet in public and insisted I transfer money to an obscure bank account immediately."
+                                </p>
+</div>
+<div>
+<p class="text-xs text-slate-500 mb-1">Previous Offenses</p>
+<ul class="text-sm text-slate-600 dark:text-slate-400 list-disc pl-4 space-y-1">
+<li>Warning sent (Spam) - 2 weeks ago</li>
+<li>Reported for Abuse - 1 month ago</li>
+</ul>
+</div>
+</div>
+<!-- Moderation Actions -->
+<div class="mt-auto">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">Actions</h3>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-red-600 hover:bg-red-700 text-white font-medium h-10 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                                    Block User &amp; Ban
+                                </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="w-full bg-orange-100 hover:bg-orange-200 text-orange-700 font-medium h-10 rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                                        Warn
+                                    </button>
+<button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium h-10 rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                                        Dismiss
+                                    </button>
+</div>
+<button class="w-full border border-primary text-primary hover:bg-primary/5 font-medium h-10 rounded-lg transition-colors flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                    Resolve Ticket Only
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

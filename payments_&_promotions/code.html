@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payments &amp; Promotions - Onlinemarket.ng Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#195de6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a202c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e121b] dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="flex flex-col w-64 h-full bg-surface-light dark:bg-surface-dark border-r border-[#e7ebf3] dark:border-gray-800 flex-shrink-0 transition-all duration-300">
+<div class="flex flex-col h-full p-4 justify-between">
+<div class="flex flex-col gap-6">
+<!-- Brand -->
+<div class="flex gap-3 px-2 items-center">
+<div class="bg-center bg-no-repeat bg-cover rounded-lg size-10 shadow-sm" data-alt="Onlinemarket.ng Logo Abstract Gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCwsDJj5hLAVyTHPxQvWemXGhp_W6WRvpZ9Cmz-JqeuJLmBqXiHkioNffFwFsltJTZ7v90K4utUMY_E5ID2BTY3Cj8mIbJbGA_dpxHkKoWJTK-YuaZ1SB1S86YEWMAjLPPvQlKYVRpUeD2tAl9Ch5F9xKJpetBoEXYsxWKwIwfI3y32QMGA9jPOubxkBvK77aHmPsFiIpcK3Cd4GJwdaksNyheQc0Afk8ynruDIIQhpj_N7eJQfvKBWfBO7Q8BoObzfypLRHfnn6to");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#0e121b] dark:text-white text-base font-bold leading-normal">Onlinemarket.ng</h1>
+<p class="text-[#4e6797] text-xs font-normal leading-normal">Admin Console</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4e6797] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4e6797] group-hover:text-primary" style="font-size: 24px;">grid_view</span>
+<span class="text-sm font-medium group-hover:text-[#0e121b] dark:group-hover:text-white">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4e6797] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4e6797] group-hover:text-primary" style="font-size: 24px;">list_alt</span>
+<span class="text-sm font-medium group-hover:text-[#0e121b] dark:group-hover:text-white">Listings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4e6797] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4e6797] group-hover:text-primary" style="font-size: 24px;">group</span>
+<span class="text-sm font-medium group-hover:text-[#0e121b] dark:group-hover:text-white">Users</span>
+</a>
+<!-- Active Link -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined fill-current" style="font-size: 24px; font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-sm font-bold">Payments &amp; Promos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4e6797] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4e6797] group-hover:text-primary" style="font-size: 24px;">settings</span>
+<span class="text-sm font-medium group-hover:text-[#0e121b] dark:group-hover:text-white">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#4e6797] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#4e6797] group-hover:text-primary" style="font-size: 24px;">help</span>
+<span class="text-sm font-medium group-hover:text-[#0e121b] dark:group-hover:text-white">Support</span>
+</a>
+</nav>
+</div>
+<!-- User Profile Snippet at bottom of sidebar -->
+<div class="flex items-center gap-3 px-3 py-4 border-t border-[#e7ebf3] dark:border-gray-800 mt-auto">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9" data-alt="Admin User Avatar Profile Picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtlTgJ6ilU44yVxaItZTedf-SADwXqD7zZSytjkF9PZ9P4v8iG1xYG0ZDQu2mLbwG8QhRhuW5Uj24vDTAunjUih5I0ly8_1KrNqz9kUO0XsZE-k8B9yZtjoNv1zumeqdRDnjkcatrShfpEDn2UjmQBY2x9mz5yJ8juT97-QvDnZSqHo_-POYcl7DYVehgTv-7tLsGAdzlT1uZHIAXckYgkJoZ7ogFfBEQaEgs5DKmLc7Fd4ZHL-yIcf9Mn1AjFdTjxEOoVz-w9oF0");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-medium text-[#0e121b] dark:text-white truncate">Admin User</p>
+<p class="text-xs text-[#4e6797] truncate">admin@onlinemarket.ng</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7ebf3] dark:border-gray-800 bg-surface-light dark:bg-surface-dark px-8 py-4 z-10">
+<div class="flex items-center gap-8 w-full">
+<!-- Search Bar -->
+<label class="flex flex-col min-w-40 h-10 max-w-lg flex-1">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#f6f6f8] dark:bg-gray-800 focus-within:ring-2 focus-within:ring-primary/20 transition-shadow">
+<div class="text-[#4e6797] flex border-none items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e121b] dark:text-white focus:outline-0 border-none bg-transparent h-full placeholder:text-[#4e6797] px-4 text-sm font-normal leading-normal" placeholder="Search transactions, users, or plans..." value=""/>
+</div>
+</label>
+<div class="flex items-center justify-end gap-4">
+<button class="relative flex items-center justify-center rounded-lg size-10 hover:bg-gray-100 dark:hover:bg-gray-800 text-[#4e6797] transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 hover:bg-gray-100 dark:hover:bg-gray-800 text-[#4e6797] transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8 pb-20">
+<div class="max-w-[1200px] mx-auto flex flex-col gap-8">
+<!-- Breadcrumbs & Heading -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap gap-2 items-center text-sm">
+<a class="text-[#4e6797] hover:text-primary transition-colors font-medium" href="#">Home</a>
+<span class="text-[#4e6797] font-medium">/</span>
+<a class="text-[#4e6797] hover:text-primary transition-colors font-medium" href="#">Dashboard</a>
+<span class="text-[#4e6797] font-medium">/</span>
+<span class="text-[#0e121b] dark:text-white font-medium">Payments</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-[#0e121b] dark:text-white text-3xl font-bold leading-tight tracking-tight">Payments &amp; Promotions</h2>
+<p class="text-[#4e6797] text-base font-normal">Track revenue streams and manage promotion packages.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-800 border border-[#e7ebf3] dark:border-gray-700 text-[#0e121b] dark:text-white text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">download</span>
+<span>Export Report</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold shadow-md shadow-primary/20 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+<span>Create Plan</span>
+</button>
+</div>
+</div>
+</div>
+<!-- KPI Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat 1 -->
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4e6797] text-sm font-medium">Total Revenue</p>
+<div class="bg-green-100 dark:bg-green-900/30 text-[#07883b] dark:text-green-400 text-xs px-2 py-0.5 rounded-full font-bold">+12.5%</div>
+</div>
+<p class="text-[#0e121b] dark:text-white text-2xl font-bold mt-2">$124,500</p>
+<p class="text-[#4e6797] text-xs mt-1">vs. last month</p>
+</div>
+<!-- Stat 2 -->
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4e6797] text-sm font-medium">Active Promotions</p>
+<div class="bg-green-100 dark:bg-green-900/30 text-[#07883b] dark:text-green-400 text-xs px-2 py-0.5 rounded-full font-bold">+5.2%</div>
+</div>
+<p class="text-[#0e121b] dark:text-white text-2xl font-bold mt-2">850</p>
+<p class="text-[#4e6797] text-xs mt-1">Active paid listings</p>
+</div>
+<!-- Stat 3 -->
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4e6797] text-sm font-medium">Avg. Order Value</p>
+<div class="bg-red-100 dark:bg-red-900/30 text-[#e73908] dark:text-red-400 text-xs px-2 py-0.5 rounded-full font-bold">-1.0%</div>
+</div>
+<p class="text-[#0e121b] dark:text-white text-2xl font-bold mt-2">$45.00</p>
+<p class="text-[#4e6797] text-xs mt-1">Per transaction</p>
+</div>
+<!-- Stat 4 -->
+<div class="flex flex-col gap-1 rounded-xl p-5 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<p class="text-[#4e6797] text-sm font-medium">Churn Rate</p>
+<div class="bg-green-100 dark:bg-green-900/30 text-[#07883b] dark:text-green-400 text-xs px-2 py-0.5 rounded-full font-bold">-0.5%</div>
+</div>
+<p class="text-[#0e121b] dark:text-white text-2xl font-bold mt-2">2.4%</p>
+<p class="text-[#4e6797] text-xs mt-1">Users cancelling plans</p>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Revenue Chart (Spans 2 cols) -->
+<div class="lg:col-span-2 rounded-xl bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-[#0e121b] dark:text-white text-lg font-bold">Revenue Analytics</h3>
+<div class="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-medium rounded-md bg-white dark:bg-gray-700 shadow-sm text-[#0e121b] dark:text-white">Daily</button>
+<button class="px-3 py-1 text-xs font-medium rounded-md text-[#4e6797] hover:text-[#0e121b]">Weekly</button>
+<button class="px-3 py-1 text-xs font-medium rounded-md text-[#4e6797] hover:text-[#0e121b]">Monthly</button>
+</div>
+</div>
+<!-- CSS-only Chart Simulation -->
+<div class="w-full h-64 relative flex items-end justify-between gap-2 px-2 pt-8">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8 pl-8 pr-2">
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- Y Axis Labels -->
+<div class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-[#4e6797] py-[-10px]">
+<span>$20k</span>
+<span>$15k</span>
+<span>$10k</span>
+<span>$5k</span>
+<span>$0</span>
+</div>
+<!-- Bars (Simulated Chart) -->
+<div class="relative flex-1 flex items-end justify-between pl-10 h-full pb-8">
+<!-- Using an SVG for the line to look cleaner -->
+<svg class="w-full h-full overflow-visible drop-shadow-md" preserveaspectratio="none" viewbox="0 0 100 40">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#195de6" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#195de6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,35 Q10,32 20,25 T40,20 T60,10 T80,15 T100,5 L100,40 L0,40 Z" fill="url(#chartGradient)"></path>
+<path d="M0,35 Q10,32 20,25 T40,20 T60,10 T80,15 T100,5" fill="none" stroke="#195de6" stroke-linecap="round" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
+<!-- Data Points -->
+<circle cx="20" cy="25" fill="#ffffff" r="1.5" stroke="#195de6" stroke-width="0.5"></circle>
+<circle cx="40" cy="20" fill="#ffffff" r="1.5" stroke="#195de6" stroke-width="0.5"></circle>
+<circle cx="60" cy="10" fill="#ffffff" r="1.5" stroke="#195de6" stroke-width="0.5"></circle>
+<circle cx="80" cy="15" fill="#ffffff" r="1.5" stroke="#195de6" stroke-width="0.5"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- Breakdown Chart (1 col) -->
+<div class="rounded-xl bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 p-6 shadow-sm flex flex-col">
+<h3 class="text-[#0e121b] dark:text-white text-lg font-bold mb-4">Revenue Source</h3>
+<div class="flex-1 flex flex-col items-center justify-center">
+<!-- CSS Conic Gradient Donut -->
+<div class="relative size-48 rounded-full mb-6" style="background: conic-gradient(#195de6 0% 65%, #3b82f6 65% 85%, #93c5fd 85% 100%);">
+<div class="absolute inset-4 bg-surface-light dark:bg-surface-dark rounded-full flex items-center justify-center flex-col">
+<span class="text-3xl font-bold text-[#0e121b] dark:text-white">65%</span>
+<span class="text-xs text-[#4e6797]">Premium Plans</span>
+</div>
+</div>
+<div class="w-full space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-[#195de6]"></div>
+<span class="text-[#4e6797]">Premium</span>
+</div>
+<span class="font-bold text-[#0e121b] dark:text-white">$80,925</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-[#3b82f6]"></div>
+<span class="text-[#4e6797]">Gold</span>
+</div>
+<span class="font-bold text-[#0e121b] dark:text-white">$24,900</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-[#93c5fd]"></div>
+<span class="text-[#4e6797]">Standard</span>
+</div>
+<span class="font-bold text-[#0e121b] dark:text-white">$18,675</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Management Table Section -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="text-[#0e121b] dark:text-white text-xl font-bold">Promotion Packages</h3>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 text-sm text-[#4e6797] bg-white dark:bg-gray-800 border border-[#e7ebf3] dark:border-gray-700 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">filter_list</span>
+                                    Filter
+                                </button>
+</div>
+</div>
+<div class="overflow-x-auto rounded-xl border border-[#e7ebf3] dark:border-gray-700 bg-surface-light dark:bg-surface-dark shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-50 dark:bg-gray-800 text-xs uppercase text-[#4e6797] font-semibold">
+<tr>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700">Package Name</th>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700">Price</th>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700">Duration</th>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700">Active Users</th>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700">Status</th>
+<th class="p-4 border-b border-[#e7ebf3] dark:border-gray-700 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<!-- Row 1 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors border-b border-[#e7ebf3] dark:border-gray-700 last:border-0">
+<td class="p-4 font-medium text-[#0e121b] dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-yellow-100 flex items-center justify-center text-yellow-600">
+<span class="material-symbols-outlined" style="font-size: 18px;">diamond</span>
+</div>
+                                                VIP Premium
+                                            </div>
+</td>
+<td class="p-4 text-[#4e6797]">$49.99</td>
+<td class="p-4 text-[#4e6797]">30 Days</td>
+<td class="p-4 text-[#0e121b] dark:text-white font-medium">1,204</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-green-600"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-[#4e6797] hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">edit</span>
+</button>
+<button class="text-[#4e6797] hover:text-red-600 transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors border-b border-[#e7ebf3] dark:border-gray-700 last:border-0">
+<td class="p-4 font-medium text-[#0e121b] dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined" style="font-size: 18px;">verified</span>
+</div>
+                                                Gold Tier
+                                            </div>
+</td>
+<td class="p-4 text-[#4e6797]">$29.99</td>
+<td class="p-4 text-[#4e6797]">14 Days</td>
+<td class="p-4 text-[#0e121b] dark:text-white font-medium">856</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-green-600"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-[#4e6797] hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">edit</span>
+</button>
+<button class="text-[#4e6797] hover:text-red-600 transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors border-b border-[#e7ebf3] dark:border-gray-700 last:border-0">
+<td class="p-4 font-medium text-[#0e121b] dark:text-white">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-gray-100 flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined" style="font-size: 18px;">rocket_launch</span>
+</div>
+                                                Basic Boost
+                                            </div>
+</td>
+<td class="p-4 text-[#4e6797]">$9.99</td>
+<td class="p-4 text-[#4e6797]">7 Days</td>
+<td class="p-4 text-[#0e121b] dark:text-white font-medium">3,421</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+<span class="size-1.5 rounded-full bg-gray-500"></span>
+                                                Draft
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-[#4e6797] hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">edit</span>
+</button>
+<button class="text-[#4e6797] hover:text-red-600 transition-colors p-1">
+<span class="material-symbols-outlined" style="font-size: 20px;">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Transactions -->
+<div class="flex flex-col gap-4">
+<h3 class="text-[#0e121b] dark:text-white text-xl font-bold">Recent Transactions</h3>
+<div class="flex flex-col gap-3">
+<!-- Transaction Card Item -->
+<div class="flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">Payment from John Doe</p>
+<p class="text-xs text-[#4e6797]">Ref: #TX-98821 • Just now</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">+$49.99</p>
+<p class="text-xs text-[#4e6797]">VIP Premium</p>
+</div>
+<div class="w-24 flex justify-end">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Success
+                                        </span>
+</div>
+<span class="material-symbols-outlined text-[#4e6797] text-xl">chevron_right</span>
+</div>
+</div>
+<!-- Transaction Card Item -->
+<div class="flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">Payment from Sarah Smith</p>
+<p class="text-xs text-[#4e6797]">Ref: #TX-98820 • 5 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">+$29.99</p>
+<p class="text-xs text-[#4e6797]">Gold Tier</p>
+</div>
+<div class="w-24 flex justify-end">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Success
+                                        </span>
+</div>
+<span class="material-symbols-outlined text-[#4e6797] text-xl">chevron_right</span>
+</div>
+</div>
+<!-- Transaction Card Item -->
+<div class="flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border border-[#e7ebf3] dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined">priority_high</span>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">Failed Payment - Mike Ross</p>
+<p class="text-xs text-[#4e6797]">Ref: #TX-98819 • 12 mins ago</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="text-sm font-bold text-[#0e121b] dark:text-white">$49.99</p>
+<p class="text-xs text-[#4e6797]">VIP Premium</p>
+</div>
+<div class="w-24 flex justify-end">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                                            Failed
+                                        </span>
+</div>
+<span class="material-symbols-outlined text-[#4e6797] text-xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
