@@ -1,40 +1,58 @@
 <?php
 // config/db.php
 
-class Database {
+class Database
+{
     private static $instance = null;
     private $conn;
 
-    private $host = 'localhost';
-    private $db_name = 'onlinemarket_ng';
-    private $username = 'root';
-    private $password = ''; // Default Laragon password
+    private function __construct()
+    {
+        $config = function_exists('app_config') ? app_config() : [
+            'DB_HOST' => 'localhost',
+            'DB_NAME' => 'onlinemarket_ng',
+            'DB_USER' => 'root',
+            'DB_PASS' => '',
+            'DB_PORT' => 3306,
+            'DISPLAY_ERRORS' => true,
+        ];
 
-    private function __construct() {
+        $host = $config['DB_HOST'] ?? 'localhost';
+        $name = $config['DB_NAME'] ?? 'onlinemarket_ng';
+        $user = $config['DB_USER'] ?? 'root';
+        $pass = $config['DB_PASS'] ?? '';
+        $port = (int)($config['DB_PORT'] ?? 3306);
+
+        $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
+
         try {
-            // First connect without DB to ensure it exists
-            $this->conn = new PDO("mysql:host=" . $this->host, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            // Create database if not exists
-            $this->conn->exec("CREATE DATABASE IF NOT EXISTS " . $this->db_name);
-            
-            // Connect to the specific database
-            $this->conn->exec("USE " . $this->db_name);
-            $this->conn->exec("set names utf8mb4");
-        } catch(PDOException $e) {
-            die("Connection Error: " . $e->getMessage());
+            $this->conn = new PDO($dsn, $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'
+            ]);
+        } catch (PDOException $e) {
+            if (function_exists('app_log')) {
+                app_log('DB connection error: ' . $e->getMessage());
+            }
+            if (!empty($config['DISPLAY_ERRORS'])) {
+                die('Database connection error: ' . $e->getMessage());
+            }
+            header('HTTP/1.1 500 Internal Server Error');
+            die('We are experiencing technical difficulties. Please try again later.');
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance) {
             self::$instance = new Database();
         }
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
     }
 }

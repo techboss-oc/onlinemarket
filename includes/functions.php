@@ -67,3 +67,40 @@ function time_elapsed_string($datetime, $full = false)
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
+
+function app_config()
+{
+    static $config = null;
+    if ($config !== null) {
+        return $config;
+    }
+    $path = __DIR__ . '/../config/env.php';
+    if (file_exists($path)) {
+        $data = require $path;
+        if (is_array($data)) {
+            $config = $data;
+        }
+    }
+    if ($config === null) {
+        $config = [
+            'APP_ENV' => 'local',
+            'DB_HOST' => 'localhost',
+            'DB_NAME' => 'onlinemarket_ng',
+            'DB_USER' => 'root',
+            'DB_PASS' => '',
+            'DB_PORT' => 3306,
+            'DISPLAY_ERRORS' => true,
+        ];
+    }
+    return $config;
+}
+
+function app_log($message)
+{
+    $dir = __DIR__ . '/../storage/logs';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0777, true);
+    }
+    $line = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
+    @file_put_contents($dir . '/app.log', $line, FILE_APPEND);
+}
