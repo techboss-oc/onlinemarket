@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/hqwhttyp/public_html/
-    - /usr/bin/rsync -av --exclude 'config' --exclude '.git' --exclude '.cpanel.yml' . $DEPLOYPATH
